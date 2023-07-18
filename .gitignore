@@ -1,0 +1,5 @@
+.idea
+./tests/test_results/*
+**/__pycache__/
+concept_clustering/__pycache__/
+**.pyc
