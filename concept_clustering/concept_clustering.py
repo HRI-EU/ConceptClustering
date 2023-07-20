@@ -45,19 +45,17 @@ class ConceptClustering:
         consistent with ``labels_``.
 
     labels_ : ndarray of shape (n_samples,)
-        Labels of each point for all spaces
-
-    concepts_ :
-        Concept association for each point
+        Labels of each point (concepts)
 
     all_centers_ :
         All centers from all steps
 
     all_labels_ :
+        All labels for all steps
+
+    all_labels_ :
         All labels from all steps for all spaces
 
-    all_concepts_ :
-        All concepts from all steps
     """
 
     def __init__(self,
@@ -77,10 +75,9 @@ class ConceptClustering:
 
         self.all_centers_ = None
         self.all_labels_ = None
-        self.all_concepts_ = None
+        self.all_labels_per_space_ = None
         self.cluster_centers_ = None
         self.labels_ = None
-        self.concepts_ = None
 
     def _check_params(self, X):
         # max_iter
@@ -114,8 +111,8 @@ class ConceptClustering:
 
         # initialize all_centers
         all_centers = [np.array(df_centers)]
+        all_labels_per_space = []
         all_labels = []
-        all_concepts = []
 
         # loop
         for it in range(iterations):
@@ -135,7 +132,7 @@ class ConceptClustering:
 
                 labels_space_ns = np.argmin(distances_ns, axis=1)
                 labels.append(labels_space_ns)
-                all_labels.append(labels)
+                all_labels_per_space.append(labels)
 
             # update centers
             for nc in range(num_clusters):
@@ -149,15 +146,14 @@ class ConceptClustering:
                     new_center_ns = mean_alt_a[features_per_space[ns]]
                     df_centers.loc[nc, features_per_space[ns]] = new_center_ns
 
-            all_concepts.append(concepts)
+            all_labels.append(concepts)
             all_centers.append(np.array(df_centers))
 
         self.all_centers_ = all_centers
         self.all_labels_ = all_labels
-        self.all_concepts_ = all_concepts
+        self.all_labels_per_space_ = all_labels_per_space
         self.cluster_centers_ = all_centers[-1]
         self.labels_ = all_labels[-1]
-        self.concepts_ = all_concepts[-1]
         return self
 
 
