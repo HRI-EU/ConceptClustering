@@ -57,7 +57,7 @@ def plot_convergence(centers):
 
 
 # %% PI controller test
-data = pd.read_csv("./tests/controllers.csv")
+data = pd.read_csv("./controllers.csv")
 features_per_space = [["P", "I"], ["overshoot"], ["t5%"]]
 num_samples = data.shape[0]
 num_clusters = 3
@@ -148,7 +148,7 @@ for i_f, fea in enumerate(["overshoot", "t5%"]):
     )
 
 now = datetime.datetime.now().strftime('%Y-%m-%d')
-fig.savefig(f"./tests/test_results/{now}_concept_clustering_test_controller.png")
+fig.savefig(f"./test_results/{now}_concept_clustering_test_controller.png")
 
 plt.tight_layout()
 plt.show()
@@ -157,6 +157,6 @@ plot_convergence(all_centers)
 
 # %% export dataset
 data[["#sample number", "P", "I", "overshoot", "t5%", "concepts"]].to_csv(
-    f"./tests/test_results/{now}_concept_clustering_test_controller_data.csv",
+    f"./test_results/{now}_concept_clustering_test_controller_data.csv",
     index=False,
 )

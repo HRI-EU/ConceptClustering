@@ -54,8 +54,9 @@ def plot_convergence(centers):
     plt.show()
     return None
 
+
 # %% airfoil example
-data = pd.read_csv("./tests/airfoils.csv")
+data = pd.read_csv("./airfoils.csv")
 features_per_space = [
     ["p0", "p1", "p2", "p3"],
     ["camber_0.03", "camber_0.2", "camber_0.4", "camber_0.6", "camber_0.8"],
@@ -160,7 +161,7 @@ for i_ds, ds in enumerate(features_per_space):
 
 fig.tight_layout(w_pad=2, h_pad=0)  # w_pad=3, h_pad=2
 now = datetime.datetime.now().strftime('%Y-%m-%d')
-fig.savefig(f"./tests/test_results/{now}_concept_clustering_test_airfoil.png")
+fig.savefig(f"./test_results/{now}_concept_clustering_test_airfoil.png")
 plt.show()
 
 plot_convergence(all_centers)

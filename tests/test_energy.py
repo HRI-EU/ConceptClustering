@@ -76,7 +76,7 @@ def make_palette(n_colors=10, c_special=(0.5, 0.5, 0.5, 0.3)):
 
 
 # %% energy management data set
-data = pd.read_csv("./tests/energy.csv")
+data = pd.read_csv("./energy.csv")
 features_per_space = [
         ["Investment costs"],
         ["Yearly total costs", "posResilience"],
@@ -170,7 +170,7 @@ for i_f, fea in enumerate(["Investment costs"]):
     )
 
 now = datetime.datetime.now().strftime('%Y-%m-%d')
-fig.savefig(f"./tests/test_results/{now}_concept_clustering_test_energy.png")
+fig.savefig(f"./test_results/{now}_concept_clustering_test_energy.png")
 
 plt.tight_layout()
 plt.show()
@@ -243,7 +243,7 @@ for i_sp, sp in enumerate(features_per_space):
     )
 
 now = datetime.datetime.now().strftime('%Y-%m-%d')
-fig.savefig(f"./tests/test_results/{now}_concept_clustering_test_energy2.png")
+fig.savefig(f"./test_results/{now}_concept_clustering_test_energy2.png")
 
 plt.tight_layout()
 plt.show()
