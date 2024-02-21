@@ -90,19 +90,14 @@ ConClus = ConceptClustering(
 
 all_centers = ConClus.all_centers_
 all_labels = ConClus.all_labels_
+all_concepts = ConClus.all_concepts_
 centers = ConClus.cluster_centers_
-labels_per_space = ConClus.all_labels_per_space_[-1]
-concepts = ConClus.labels_
+labels = ConClus.labels_
 
+concepts = all_concepts[-1]
 for ns in range(num_spaces):
-    data[f"labels_space{ns+1}"] = labels_per_space[ns]
+    data[f"labels_space{ns+1}"] = labels[ns]
 data["concepts"] = concepts
-
-df_concept_change = pd.DataFrame()
-for step in range(len(all_labels)):
-    df_concept_change[f"{step}"] = all_labels[step][:, 0]
-
-dataset_concepts = data[data["concepts"].isin(range(num_clusters))]
 
 fig = plt.figure(figsize=(8, 8))
 ax1 = plt.subplot2grid((1, 1), (0, 0), 1, 1, fig=fig)
@@ -126,7 +121,7 @@ plt.tight_layout()
 plt.show()
 
 now = datetime.datetime.now().strftime('%Y-%m-%d')
-fig.savefig(f"./tests/test_results/{now}_concept_clustering_test_2dim.png")
+fig.savefig(f"./test_results/{now}_concept_clustering_test_2dim.png")
 
 
 # %% plot 3 dim dataset
@@ -144,20 +139,18 @@ ConClus = ConceptClustering(
 
 all_centers = ConClus.all_centers_
 all_labels = ConClus.all_labels_
+all_concepts = ConClus.all_concepts_
 centers = ConClus.cluster_centers_
-labels_per_space = ConClus.all_labels_per_space_[-1]
-concepts = ConClus.labels_
+labels = ConClus.labels_
 
+concepts = all_concepts[-1]
 for ns in range(num_spaces):
-    data[f"labels_space{ns+1}"] = labels_per_space[ns]
+    data[f"labels_space{ns+1}"] = labels[ns]
 data["concepts"] = concepts
 
 df_concept_change = pd.DataFrame()
-for step in range(len(all_labels)):
-    df_concept_change[f"{step}"] = all_labels[step][:, 0]
-
-dataset_concepts = data[data["concepts"].isin(range(num_clusters))]
-
+for step in range(len(all_concepts)):
+    df_concept_change[f"{step}"] = all_concepts[step][:, 0]
 
 fig = plt.figure(figsize=(12, 8))
 ax1 = plt.subplot2grid((1, 2), (0, 0), 1, 1, fig=fig)
@@ -179,7 +172,7 @@ for i_cen, cen in enumerate(all_centers[1::]):
                  color=palette1(int(255 * (i_cen / (len(all_centers) - 2)))))
 
 now = datetime.datetime.now().strftime('%Y-%m-%d')
-fig.savefig(f"./tests/test_results/{now}_concept_clustering_test_3dim.png")
+fig.savefig(f"./test_results/{now}_concept_clustering_test_3dim.png")
 
 plt.tight_layout()
 plt.show()
@@ -215,19 +208,18 @@ ConClus = ConceptClustering(
 
 all_centers = ConClus.all_centers_
 all_labels = ConClus.all_labels_
+all_concepts = ConClus.all_concepts_
 centers = ConClus.cluster_centers_
-labels_per_space = ConClus.all_labels_per_space_[-1]
-concepts = ConClus.labels_
+labels = ConClus.labels_
 
+concepts = all_concepts[-1]
 for ns in range(num_spaces):
-    data[f"labels_space{ns+1}"] = labels_per_space[ns]
+    data[f"labels_space{ns+1}"] = labels[ns]
 data["concepts"] = concepts
 
 df_concept_change = pd.DataFrame()
-for step in range(len(all_labels)):
-    df_concept_change[f"{step}"] = all_labels[step][:, 0]
-
-dataset_concepts = data[data["concepts"].isin(range(num_clusters))]
+for step in range(len(all_concepts)):
+    df_concept_change[f"{step}"] = all_concepts[step][:, 0]
 
 # plot 4 dim dataset
 
@@ -240,7 +232,7 @@ sns.scatterplot(data=data, x="feature c", y="feature d", hue="concepts", ax=ax2,
 
 
 now = datetime.datetime.now().strftime('%Y-%m-%d')
-fig.savefig(f"./tests/test_results/{now}_concept_clustering_test_4dim.png")
+fig.savefig(f"./test_results/{now}_concept_clustering_test_4dim.png")
 
 plt.tight_layout()
 plt.show()

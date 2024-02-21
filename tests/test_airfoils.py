@@ -54,7 +54,6 @@ def plot_convergence(centers):
     plt.show()
     return None
 
-
 # %% airfoil example
 data = pd.read_csv("./airfoils.csv")
 features_per_space = [
@@ -84,17 +83,18 @@ ConClus = ConceptClustering(
 
 all_centers = ConClus.all_centers_
 all_labels = ConClus.all_labels_
+all_concepts = ConClus.all_concepts_
 centers = ConClus.cluster_centers_
-labels_per_space = ConClus.all_labels_per_space_[-1]
-concepts = ConClus.labels_
+labels = ConClus.labels_
 
+concepts = all_concepts[-1]
 for ns in range(num_spaces):
-    data[f"labels_space{ns+1}"] = labels_per_space[ns]
+    data[f"labels_space{ns+1}"] = labels[ns]
 data["concepts"] = concepts
 
 df_concept_change = pd.DataFrame()
-for step in range(len(all_labels)):
-    df_concept_change[f"{step}"] = all_labels[step][:, 0]
+for step in range(len(all_concepts)):
+    df_concept_change[f"{step}"] = all_concepts[step][:, 0]
 
 dataset_concepts = data[data["concepts"].isin(range(num_clusters))]
 
