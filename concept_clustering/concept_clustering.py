@@ -60,13 +60,15 @@ class ConceptClustering:
         All concepts from all steps
     """
 
-    def __init__(self,
-                 description_spaces,
-                 n_clusters=3,
-                 max_iter=300,
-                 tol=1e-4,
-                 verbose=0,
-                 random_state=None,):
+    def __init__(
+        self,
+        description_spaces,
+        n_clusters=3,
+        max_iter=300,
+        tol=1e-4,
+        verbose=0,
+        random_state=None,
+    ):
 
         self.description_spaces = description_spaces
         self.n_clusters = n_clusters
@@ -85,15 +87,17 @@ class ConceptClustering:
     def _check_params(self, X):
         # max_iter
         if self.max_iter <= 0:
-            raise ValueError(
-                f"max_iter should be > 0, got {self.max_iter} instead.")
+            raise ValueError(f"max_iter should be > 0, got {self.max_iter} instead.")
 
         # n_clusters
         if X.shape[0] < self.n_clusters:
-            raise ValueError(f"n_samples={X.shape[0]} should be >= "
-                             f"n_clusters={self.n_clusters}.")
+            raise ValueError(
+                f"n_samples={X.shape[0]} should be >= " f"n_clusters={self.n_clusters}."
+            )
 
-    def fit(self, X, centers,):
+    def fit(
+        self, X, centers,
+    ):
         """Compute concept clustering
 
         Parameters
@@ -130,7 +134,10 @@ class ConceptClustering:
                 distances_ns = np.zeros((num_samples, num_clusters))
                 for nc in range(num_clusters):
                     distances_ns_nc_a = np.linalg.norm(
-                        data[features_per_space[ns]] - df_centers[features_per_space[ns]].iloc[nc], axis=1)
+                        data[features_per_space[ns]]
+                        - df_centers[features_per_space[ns]].iloc[nc],
+                        axis=1,
+                    )
                     distances_ns[:, nc] = distances_ns_nc_a
 
                 labels_space_ns = np.argmin(distances_ns, axis=1)
@@ -139,10 +146,14 @@ class ConceptClustering:
 
             # update centers
             for nc in range(num_clusters):
-                concept_nc = [np.all([labels[ns] == nc for ns in range(num_spaces)], axis=0)]
+                concept_nc = [
+                    np.all([labels[ns] == nc for ns in range(num_spaces)], axis=0)
+                ]
                 concepts[concept_nc[0]] = nc
                 for ns in range(num_spaces):
-                    mean_alt_a = np.mean(data[features_per_space[ns]][concept_nc[0]], axis=0)
+                    mean_alt_a = np.mean(
+                        data[features_per_space[ns]][concept_nc[0]], axis=0
+                    )
                     # if np.isnan(mean_alt_a[features_per_space[ns]]):
                     #     new_center_ns = centers[nc][ns]
                     # else:
