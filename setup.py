@@ -1,5 +1,18 @@
-#!/usr/bin/env python
 """
+-*- coding: utf-8 -*-
+
+ Copyright (C)
+ Honda Research Institute Europe GmbH
+ Carl-Legien-Str. 30
+ 63073 Offenbach/Main
+ Germany
+ UNPUBLISHED PROPRIETARY MATERIAL.
+ ALL RIGHTS RESERVED.
+
+ @author: Felix Lanfermann
+
+Script for installing the Concept Clustering package.
+
 ## LICENSE: GPL 3.0
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,14 +26,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-Script for installing the Concept Clustering package.
-
-Copyright (c)
-Honda Research Institute Europe GmbH
-
-Authors: Felix Lanfermann
-Contact: felix.lanfermann@honda-ri.de
 """
 
 from setuptools import setup, find_packages
