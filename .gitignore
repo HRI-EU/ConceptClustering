@@ -1,7 +1,6 @@
 .idea
-examples/example_results/*
-examples/example_results/*
-examples/example_results
+examples/example_results/
 **/__pycache__/
 concept_clustering/__pycache__/
 **.pyc
+*.egg-info/
