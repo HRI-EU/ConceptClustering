@@ -13,13 +13,13 @@
 #
 
 
-name = 'concept_clustering'
+name = "concept_clustering"
 
-version = '0.1'
+version = "0.1"
 
-category = 'Libraries'
+category = "Libraries"
 
-envVars = [('PYTHONPATH', '${INSTALL_ROOT}/include:${PYTHONPATH}')]
+envVars = [("PYTHONPATH", "${INSTALL_ROOT}/include:${PYTHONPATH}")]
 
 sqLevel = "basic"
 
