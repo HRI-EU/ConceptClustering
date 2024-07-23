@@ -25,7 +25,7 @@ from matplotlib.colors import ListedColormap
 from sklearn.cluster import KMeans
 from sklearn import preprocessing
 import seaborn as sns
-
+from pathlib import Path
 
 def create_centers(center_array, features_per_space):
     list_of_features = [item for sublist in features_per_space for item in sublist]
@@ -159,9 +159,13 @@ for i_ds, ds in enumerate(features_per_space):
             handles, _ = ax.get_legend_handles_labels()
             ax.legend([], [], frameon=False)  # remove legend
 
+
+path = Path(f"./example_results/")
+path.mkdir(parents=True, exist_ok=True)
+
 fig.tight_layout(w_pad=2, h_pad=0)  # w_pad=3, h_pad=2
 now = datetime.datetime.now().strftime('%Y-%m-%d')
-fig.savefig(f"./test_results/{now}_concept_clustering_test_airfoil.png")
+fig.savefig(f"./example_results/{now}_concept_clustering_test_airfoil.png")
 plt.show()
 
 plot_convergence(all_centers)

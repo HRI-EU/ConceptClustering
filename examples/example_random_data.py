@@ -25,7 +25,7 @@ from matplotlib.colors import ListedColormap
 from sklearn.cluster import KMeans
 from sklearn import preprocessing
 import seaborn as sns
-
+from pathlib import Path
 
 def create_random_data(features_per_space=[["feature 1"], ["feature 2"]], num_samples=100):
     num_spaces = len(features_per_space)
@@ -230,9 +230,11 @@ sns.scatterplot(data=data, x="feature a", y="feature b", hue="concepts", ax=ax1,
 ax2 = plt.subplot2grid((1, 2), (0, 1), 1, 1, fig=fig)
 sns.scatterplot(data=data, x="feature c", y="feature d", hue="concepts", ax=ax2, palette="viridis_r")
 
+path = Path(f"./example_results/")
+path.mkdir(parents=True, exist_ok=True)
 
 now = datetime.datetime.now().strftime('%Y-%m-%d')
-fig.savefig(f"./test_results/{now}_concept_clustering_test_4dim.png")
+fig.savefig(f"./example_results/{now}_concept_clustering_test_4dim.png")
 
 plt.tight_layout()
 plt.show()

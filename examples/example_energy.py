@@ -25,7 +25,7 @@ from matplotlib.colors import ListedColormap
 from sklearn.cluster import KMeans
 from sklearn import preprocessing
 import seaborn as sns
-
+from pathlib import Path
 
 def create_centers(center_array, features_per_space):
     list_of_features = [item for sublist in features_per_space for item in sublist]
@@ -151,8 +151,11 @@ for i_f, fea in enumerate(["Investment costs"]):
         log_scale=(False, False),
     )
 
+path = Path(f"./example_results/")
+path.mkdir(parents=True, exist_ok=True)
+
 now = datetime.datetime.now().strftime('%Y-%m-%d')
-fig.savefig(f"./test_results/{now}_concept_clustering_test_energy.png")
+fig.savefig(f"./example_results/{now}_concept_clustering_test_energy.png")
 
 plt.tight_layout()
 plt.show()
