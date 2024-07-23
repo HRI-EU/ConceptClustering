@@ -24,3 +24,5 @@ envVars = [("PYTHONPATH", "${INSTALL_ROOT}/include:${PYTHONPATH}")]
 sqLevel = "basic"
 
 sqOptOutRules = ["GEN03"]
+
+pylintConf = "pyproject.toml"

@@ -33,6 +33,8 @@
 #
 #
 
+[tool.black]
+line_length = 80
 
 [tool.pylint.master]
 # Use multiple processes to speed up Pylint. Specifying 0 will
@@ -41,10 +43,8 @@ jobs                     = 0
 extension-pkg-allow-list = 'lxml.etree'
 
 [tool.pylint.messages_control]
-
 # enable errors only
 enable     = [ 'E' ]
-
 # disable all warning, convention, refactoring issues
 # E0602: undefined variables and
 # E0401: import errors
