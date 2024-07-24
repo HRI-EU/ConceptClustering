@@ -90,10 +90,18 @@ class ConceptClustering:
             raise ValueError(f"max_iter should be > 0, got {self.max_iter} instead.")
 
         # n_clusters
+        if self.n_clusters <= 1:
+            raise ValueError(f"n_clusters={self.n_clusters} should be >= 1.")
+
+        # n_clusters
         if X.shape[0] < self.n_clusters:
             raise ValueError(
                 f"n_samples={X.shape[0]} should be >= " f"n_clusters={self.n_clusters}."
             )
+
+        # X is df
+        if not isinstance(X, pd.DataFrame):
+            raise TypeError(f"X should be a pandas DataFrame, got {type(X)}")
 
     def fit(
         self, X, centers,

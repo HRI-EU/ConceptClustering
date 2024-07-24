@@ -38,5 +38,19 @@ def test_f3():
     assert c == 5
 
 
+def test_check_parames_max_iter():
+    with pytest.raises(ValueError):
+        ConceptClustering(
+            description_spaces=None, n_clusters=3, max_iter=-50,
+        ).fit(X=None, centers=None)
+
+
+def test_check_parames_n_clusters():
+    with pytest.raises(ValueError):
+        ConceptClustering(
+            description_spaces=None, n_clusters=-3, max_iter=50,
+        ).fit(X=None, centers=None)
+
+
 if __name__ == "__main__":
     pytest.main()
