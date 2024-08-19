@@ -23,9 +23,10 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from matplotlib.colors import ListedColormap
 from sklearn.cluster import KMeans
-from sklearn import preprocessing
+from sklearn.preprocessing import MinMaxScaler
 import seaborn as sns
 from pathlib import Path
+
 
 def create_centers(center_array, features_per_space):
     list_of_features = [item for sublist in features_per_space for item in sublist]
@@ -47,42 +48,49 @@ def plot_convergence(centers):
             df[f"cluster {nc}"] = li
 
             ax = plt.subplot2grid((len(centers[0][0]), num_clusters), (nf, nc), 1, 1)
-            df.plot(
-                y=f"cluster {nc}",
-                ax=ax
-            )
+            df.plot(y=f"cluster {nc}", ax=ax)
 
     plt.show()
     return None
 
 
 # %% energy management data set
-data = pd.read_csv("./energy.csv")
 features_per_space = [
-        ["Investment costs"],
-        ["Yearly total costs", "posResilience"],
-    ]
-num_samples = data.shape[0]
+    ["Investment costs"],
+    ["Yearly total costs", "posResilience"],
+]
 num_clusters = 3
+use_scaled_data = True
+
 list_of_features = [item for sublist in features_per_space for item in sublist]
 num_spaces = len(features_per_space)
+data = pd.read_csv("./energy.csv", usecols=list_of_features)
+num_samples = data.shape[0]
+
+# set the initial centers manually
 df_centers = create_centers(
-    np.array([
-        [50000, 337000, 500],
-        [200000, 333000, 1250],
-        [500000, 326000, 3000]]),
-    features_per_space=features_per_space
+    np.array([[70000, 336000, 500], [250000, 333000, 1000], [450000, 324000, 1000]]),
+    features_per_space=features_per_space,
 )
 
-# kmeans_clustering = KMeans(n_clusters=2, random_state=0).fit(data)
-# kmeans_labels = kmeans_clustering.labels_
-# kmeans_centers = kmeans_clustering.cluster_centers_
+if use_scaled_data:
+    # scale the data to [0, 1]
+    scaler = MinMaxScaler().fit(data[list_of_features])
+    data_scaled = pd.DataFrame(
+        scaler.transform(data[list_of_features]), columns=data[list_of_features].columns
+    )
 
-ConClus = ConceptClustering(
-    description_spaces=features_per_space,
-    n_clusters=3,
-    max_iter=50,
-).fit(X=data, centers=df_centers)
+    df_centers_scaled = pd.DataFrame(
+        scaler.transform(df_centers), columns=data[list_of_features].columns
+    )
+
+    ConClus = ConceptClustering(
+        description_spaces=features_per_space, n_clusters=3, max_iter=50,
+    ).fit(X=data_scaled, centers=df_centers_scaled)
+else:
+    ConClus = ConceptClustering(
+        description_spaces=features_per_space, n_clusters=3, max_iter=50,
+    ).fit(X=data, centers=df_centers)
 
 all_centers = ConClus.all_centers_
 all_labels = ConClus.all_labels_
@@ -123,11 +131,18 @@ sns.scatterplot(
 for i_f, fea in enumerate(["Investment costs"]):
     # get bins
     num_bins = 25
-    bin_range_concepts = [(min(data[data["concepts"] == i_con][fea]),
-                           max(data[data["concepts"] == i_con][fea])) for i_con in
-                          range(num_clusters)]
-    bins = np.sort(np.append(np.linspace(min(data[fea]), max(data[fea]), num_bins),
-                             bin_range_concepts))
+    bin_range_concepts = [
+        (
+            min(data[data["concepts"] == i_con][fea]),
+            max(data[data["concepts"] == i_con][fea]),
+        )
+        for i_con in range(num_clusters)
+    ]
+    bins = np.sort(
+        np.append(
+            np.linspace(min(data[fea]), max(data[fea]), num_bins), bin_range_concepts
+        )
+    )
 
     ax2 = plt.subplot2grid((1, 2), (0, i_f), 1, 1, fig=fig)
     sns.histplot(
@@ -138,7 +153,7 @@ for i_f, fea in enumerate(["Investment costs"]):
         bins=bins,
         element="step",
         log_scale=(False, False),
-        ax=ax2
+        ax=ax2,
     )
     sns.histplot(
         data=dataset_concepts,
@@ -154,7 +169,7 @@ for i_f, fea in enumerate(["Investment costs"]):
 path = Path(f"./example_results/")
 path.mkdir(parents=True, exist_ok=True)
 
-now = datetime.datetime.now().strftime('%Y-%m-%d')
+now = datetime.datetime.now().strftime("%Y-%m-%d")
 fig.savefig(f"./example_results/{now}_concept_clustering_test_energy.png")
 
 plt.tight_layout()
