@@ -1,6 +1,6 @@
 # Concept Clustering package
 
-The concept clustering method separates
+The concept clustering method separates data instances into groups based on their similarity in multiple description spaces, i.e. sets of features.
 
 ## Installation
 - install via pip: `pip install .`
