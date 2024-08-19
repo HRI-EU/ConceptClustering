@@ -87,6 +87,7 @@ all_concepts = ConClus.all_concepts_
 centers = ConClus.cluster_centers_
 labels = ConClus.labels_
 concepts = ConClus.concepts_
+cqm = ConClus.concept_quality()
 
 for ns in range(num_spaces):
     data[f"labels_space{ns+1}"] = labels[ns]

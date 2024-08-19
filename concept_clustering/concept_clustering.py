@@ -178,3 +178,53 @@ class ConceptClustering:
         self.labels_ = all_labels[-1]
         self.concepts_ = all_concepts[-1]
         return self
+
+    def concept_quality(self, num_c=None, labels=None, concepts=None):
+        """Compute concept quality
+
+        Parameters
+        ----------
+        num_c : int
+        labels : ndarray of shape (n_samples, num_ds)
+        concepts : ndarray of shape (n_samples, 1)
+
+        Returns
+        -------
+        cqm: list
+            concept quality metric (separately for each concept)
+
+        """
+        if num_c is None:
+            num_c = self.n_clusters
+        if labels is None:
+            labels = self.labels_
+        if concepts is None:
+            concepts = self.concepts_
+        num_ds = len(labels)
+
+        # Create DataFrame directly with labels and concepts
+        df = pd.DataFrame({f"labels_{i}": labels[i] for i in range(num_ds)})
+        df["concepts"] = concepts.astype(int)
+
+        # Precompute value counts for concepts and labels
+        concept_counts = df["concepts"].value_counts()
+        label_counts = {
+            f"labels_{i}": df[f"labels_{i}"].value_counts() for i in range(num_ds)
+        }
+
+        # Calculate CQM using vectorized operations
+        cqm = []
+        for n_c in range(num_c):
+            if n_c not in concept_counts.index:
+                cqm.append(0)
+            else:
+                ratios = np.array(
+                    [
+                        concept_counts[n_c] / label_counts[f"labels_{n_s}"][n_c]
+                        for n_s in range(num_ds)
+                    ]
+                )
+                cqm_value = np.prod(ratios) ** (1 / num_ds)
+                cqm.append(cqm_value)
+
+        return cqm

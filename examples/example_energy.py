@@ -60,7 +60,7 @@ features_per_space = [
     ["Yearly total costs", "posResilience"],
 ]
 num_clusters = 3
-use_scaled_data = True
+use_scaled_data = False
 
 list_of_features = [item for sublist in features_per_space for item in sublist]
 num_spaces = len(features_per_space)
@@ -98,6 +98,7 @@ all_concepts = ConClus.all_concepts_
 centers = ConClus.cluster_centers_
 labels = ConClus.labels_
 concepts = ConClus.concepts_
+cqm = ConClus.concept_quality()
 
 for ns in range(num_spaces):
     data[f"labels_space{ns+1}"] = labels[ns]
