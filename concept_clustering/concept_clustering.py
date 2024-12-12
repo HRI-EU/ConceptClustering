@@ -103,6 +103,10 @@ class ConceptClustering:
         if not isinstance(X, pd.DataFrame):
             raise TypeError(f"X should be a pandas DataFrame, got {type(X)}")
 
+        # X is numeric
+        if not all(pd.api.types.is_numeric_dtype(X[col]) for col in X.columns):
+            raise TypeError(f"X should only contain numeric values. Consider encoding X.")
+
     def fit(
         self, X, centers,
     ):
