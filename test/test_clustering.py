@@ -24,19 +24,9 @@ import pandas as pd
 from concept_clustering.concept_clustering import ConceptClustering
 
 
-def test_f1():
+def test_dummy():
     a = 5
     assert a == 5
-
-
-def test_f2():
-    b = 5
-    assert b == 5
-
-
-def test_f3():
-    c = 5
-    assert c == 5
 
 
 def test_check_params_max_iter():
@@ -66,6 +56,24 @@ def test_check_params_x_type():
     with pytest.raises(TypeError):
         ConceptClustering(description_spaces=None, n_clusters=3, max_iter=50,).fit(
             X=data, centers=None
+        )
+
+
+def test_check_params_centers_type():
+    data = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), columns=["a", "b", "c"])
+    centers = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    with pytest.raises(TypeError):
+        ConceptClustering(description_spaces=None, n_clusters=3, max_iter=50,).fit(
+            X=data, centers=centers
+        )
+
+
+def test_check_params_centers_number():
+    data = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]), columns=["a", "b", "c"])
+    centers = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6]]), columns=["a", "b", "c"])
+    with pytest.raises(ValueError):
+        ConceptClustering(description_spaces=None, n_clusters=3, max_iter=50,).fit(
+            X=data, centers=centers
         )
 
 

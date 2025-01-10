@@ -84,7 +84,7 @@ class ConceptClustering:
         self.labels_ = None
         self.concepts_ = None
 
-    def _check_params(self, X):
+    def _check_params(self, X, centers):
         # max_iter
         if self.max_iter <= 0:
             raise ValueError(f"max_iter should be > 0, got {self.max_iter} instead.")
@@ -101,11 +101,24 @@ class ConceptClustering:
 
         # X is df
         if not isinstance(X, pd.DataFrame):
-            raise TypeError(f"X should be a pandas DataFrame, got {type(X)}")
+            raise TypeError(f"X should be a pandas DataFrame, got {type(X)}.")
 
         # X is numeric
         if not all(pd.api.types.is_numeric_dtype(X[col]) for col in X.columns):
-            raise TypeError(f"X should only contain numeric values. Consider encoding X.")
+            raise TypeError(
+                f"X should only contain numeric values. Consider encoding X."
+            )
+
+        # centers is df
+        if not isinstance(centers, pd.DataFrame):
+            raise TypeError(
+                f"centers should be a pandas DataFrame, got {type(centers)}."
+            )
+
+        if centers.shape[0] != self.n_clusters:
+            raise ValueError(
+                f"Number of centers and number of clusters are not equal: {centers.shape[0]} != {self.n_clusters}"
+            )
 
     def fit(
         self, X, centers,
@@ -118,7 +131,7 @@ class ConceptClustering:
 
         centers : pd.DataFrame
         """
-        self._check_params(X)
+        self._check_params(X, centers)
 
         data = X
         df_centers = centers
