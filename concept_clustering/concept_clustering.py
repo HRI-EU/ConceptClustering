@@ -23,7 +23,7 @@ class ConceptClustering:
 
     Parameters
     ----------
-    description_spaces :
+    description_spaces : list of strings
         The spaces that the data set is split into for the identification of concepts
 
     n_clusters : int, default=8
@@ -31,11 +31,11 @@ class ConceptClustering:
         centroids to generate.
 
     max_iter : int, default=300
-        Maximum number of iterations of the k-means algorithm for a
+        Maximum number of iterations of the algorithm for a
         single run.
 
     verbose : int, default=0
-        Verbosity mode.
+        Verbosity mode. Not yet implemented.
 
     Attributes
     ----------
@@ -166,9 +166,6 @@ class ConceptClustering:
                     mean_alt_a = np.mean(
                         data[features_per_space[ns]][concept_nc[0]], axis=0
                     )
-                    # if np.isnan(mean_alt_a[features_per_space[ns]]):
-                    #     new_center_ns = centers[nc][ns]
-                    # else:
                     new_center_ns = mean_alt_a[features_per_space[ns]]
                     df_centers.loc[nc, features_per_space[ns]] = new_center_ns
 
