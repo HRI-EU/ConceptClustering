@@ -20,10 +20,6 @@ from concept_clustering.concept_clustering import ConceptClustering
 
 import datetime
 import matplotlib.pyplot as plt
-from matplotlib import cm
-from matplotlib.colors import ListedColormap
-from sklearn.cluster import KMeans
-from sklearn import preprocessing
 import seaborn as sns
 from pathlib import Path
 
