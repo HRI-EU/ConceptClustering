@@ -3,11 +3,8 @@
 
 concept clustering package
 
-Copyright (C)
-Honda Research Institute Europe GmbH
-Carl-Legien-Str. 30
-63073 Offenbach/Main
-Germany
+Copyright (c) 2025, Honda Research Institute Europe GmbH
+All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
