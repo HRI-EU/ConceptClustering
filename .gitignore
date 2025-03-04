@@ -4,3 +4,4 @@ examples/example_results/
 concept_clustering/__pycache__/
 **.pyc
 *.egg-info/
+build/
